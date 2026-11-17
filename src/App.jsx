@@ -66,13 +66,12 @@ import {
 // Crie um projeto gratuito em https://console.firebase.google.com
 // Ative "Authentication" (Anônimo) e "Firestore Database" e cole os dados abaixo:
 const MY_PRODUCTION_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAsTnPSHtVtllNcOFBSHqvo4u5moKIrbhg",
-  authDomain: "lumelearning-c762a.firebaseapp.com",
-  projectId: "lumelearning-c762a",
-  storageBucket: "lumelearning-c762a.firebasestorage.app",
-  messagingSenderId: "107142620933",
-  appId: "1:107142620933:web:2d4205c29e161fb6bb396c",
-  measurementId: "G-1SQ4K9DDYZ"
+  apiKey: '',
+  authDomain: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
 };
 
 const firebaseConfig =
@@ -157,6 +156,28 @@ const COURSE_GRADIENTS = [
 // ==========================================
 // COMPONENTE DA LOGO OFICIAL LUME LEARNING
 // ==========================================
+const LUME_FAVICON_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="16" fill="#F3E8CA"/>
+    <circle cx="32" cy="32" r="10" fill="none" stroke="#A67522" stroke-width="4.5"/>
+    <path d="M32 10v6M32 48v6M10 32h6M48 32h6M16.4 16.4l4.2 4.2M43.4 43.4l4.2 4.2M47.6 16.4l-4.2 4.2M20.6 43.4l-4.2 4.2" stroke="#A67522" stroke-width="4.5" stroke-linecap="round"/>
+  </svg>`
+)}`;
+
+function applyLumeBrowserBranding(pageTitle = 'lume learning — Organize. Aprenda. Evolua.') {
+  if (typeof document === 'undefined') return;
+  document.title = pageTitle;
+
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+  link.type = 'image/svg+xml';
+  link.href = LUME_FAVICON_SVG;
+}
+
 function LumeBrandMark({ size = 'md', showTagline = true, collapsed = false }) {
   const boxSizes = {
     sm: 'w-9 h-9 rounded-xl',
@@ -312,6 +333,10 @@ export default function App() {
     setToast(message);
     setTimeout(() => setToast(null), 3200);
   };
+
+  useEffect(() => {
+    applyLumeBrowserBranding('lume learning — Organize. Aprenda. Evolua.');
+  }, []);
 
   useEffect(() => {
     if (!auth) {
@@ -1844,6 +1869,10 @@ export default function App() {
 // TELA DE LOGIN & CRIAR CONTA COM IDENTIDADE VISUAL LUME LEARNING
 // ============================================================================
 function AuthLoginScreen({ authReady, firebaseUser, onLoginSuccess }) {
+  useEffect(() => {
+    applyLumeBrowserBranding('lume learning — Organize. Aprenda. Evolua.');
+  }, []);
+
   const [mode, setMode] = useState('login');
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
